@@ -1,0 +1,637 @@
+body {
+    padding: 0; 
+    font-family: 'Helvetica Neue', 'Arial Narrow Bold', sans-serif; 
+  }
+  
+  h1, h2, h3, h4 {
+    color: #034E46; 
+  }
+  
+  h1 {
+    font-weight: 500;
+  }
+  
+  h3 {
+    font-weight: 500; 
+    margin-bottom: 5px;
+  }
+  
+  h4 {
+    font-weight: 400; 
+    font-size: 16px;
+    margin-top: 0px;
+  }
+  
+  .App {
+    width: 100vw; 
+    min-height: 100vh;
+    display:flex;
+    background-color: #F0F9F8;
+    flex-direction: column;
+  }
+  
+  .Home {
+    width: 100%;
+    padding: 40px; 
+  }
+  
+  .Content {
+    margin-left: 250px;
+  }
+  
+  .Sidebar {
+    position: fixed;
+    font-size: 12px;
+    height: 100%; 
+    width: 250px;
+    background-color: white; 
+    padding-top: 20px;
+    border-right: 1px solid lightgray;
+  }
+  
+  .SidebarList {
+    height: auto;
+    width: auto;  
+    padding: 0px 70px 0px 0px;
+    margin: 0; 
+  }
+  
+  .SidebarList .row {
+    font-size: 20px; 
+    width: 100%; 
+    height: 50px; 
+    list-style-type: none;
+    margin: 6px 0px;
+    padding: 0px;
+    display: flex; 
+    flex-direction: row;
+    color: black; 
+    justify-content: left;
+    align-items: center;
+    border-bottom: 4px solid white;
+  }
+  
+  .SidebarList .row:hover, 
+  .SidebarList .row:active {
+    cursor: pointer;
+    border-bottom: solid #009C8C 4px; 
+  }
+  
+  .SidebarList .icon {
+    color: #009C8C; 
+    flex:20%;
+    display: grid; 
+    place-items: center; 
+    margin-left: 20px; 
+    margin-right: 10px;
+  }
+  
+  .SidebarList .title {
+    flex: 80%; 
+    font-weight: 500;
+  }
+  
+    /* Toolbar */ 
+    .Toolbar {
+      display: flex; 
+      flex-direction: row;
+      position: sticky;
+      top: 0;
+      left: 0;
+      align-self: flex-start;
+      width: 100%; 
+      background-color: white;
+      border-bottom: 2px solid rgb(231, 228, 228);
+    }
+
+  
+  .Toolbar h1 {
+    font-size: 32px; 
+  }
+
+  .Toolbar .friskLogo {
+    display: flex; 
+    flex-direction: row;
+    justify-content: left;
+    align-items: center;
+    width: 250px;
+    padding: 15px 20px;
+    border-right: 1px solid lightgray; 
+  }
+  
+  .Toolbar .friskLogo h1 {
+    font-size: 32px;
+    margin-left: 10px;
+    font-weight: 600;
+    width: 250px;
+  }
+  
+  .Toolbar .title {
+    display: flex; 
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 30px;
+  }
+
+  .Toolbar .logo {
+    width: 30px; 
+    height: 30px;
+  }
+  
+  .Toolbar .logo .icon {
+    flex: 20%; 
+  }
+  
+  .Toolbar .logo .title {
+    flex: 80%;
+  }
+  
+  .LoginPanel {
+    position: absolute;
+    left: 50%; 
+    width: 400px; 
+    margin: 0 0 0 -200px;
+    margin-top: 100px;
+  }
+  
+  .LoginPanel h1 {
+    font-size: 40px; 
+  }
+  
+  .LoginPanel .errorMsg {
+    margin-top: 15px; 
+    color: #FF4155;
+  }
+  
+  .LoginForm {
+    background: white;
+    padding: 30px 30px;
+    border-radius: 5px;
+    box-shadow: 0 0 20px 5px rgba(190, 190, 190, 0.181);
+  }
+  
+  .form-group {
+    display: flex; 
+    flex-direction: column;
+    margin-bottom: 20px;
+  }
+  
+  .form-group label {
+    margin: 0px 0px 5px 0px;
+    font-weight: 500;
+    font-size: 16px;
+  }
+  
+  .form-group input {
+    margin: 5px 0px;
+    font-weight: 500;
+    font-size: 18px;
+    border: 1px solid #034E46; 
+    border-radius: 5px;
+    padding: 15px;
+  }
+  
+  .submitBtn {
+    padding: 15px 30px; 
+    font-size: 16px;
+    border: none;
+    background-color: #034E46;
+    color: white; 
+    font-weight: 600;
+    text-transform: uppercase;
+    border-radius: 100px;
+    margin-left: 110px;
+  }
+  
+  .submitBtn:hover {
+    background-color: #069385;
+    translate: 0px 2px;
+  }
+  
+  .LoginPanel .friskLogo {
+    display: flex; 
+    flex-direction: row;
+    align-items: center;
+    margin-left: 80px;
+    margin-bottom: 10px;
+  }
+  
+  .LoginPanel .friskLogo h1 {
+    font-size: 60px;
+    font-weight: 600;
+    margin: 20px 0px 20px 10px;
+  }
+  
+  .LoginPanel .logo {
+    width: 60px; 
+    height: 60px;
+  }
+  
+  .Warning {
+    margin-top: -5px;
+    display: flex; 
+    flex-direction: row;
+    align-items: center;
+    background: #ff41544a; 
+    border-radius: 5px; 
+    color: #FF4155; 
+    padding: 7px 10px; 
+  }
+  
+  .Warning p {
+    font-weight: 400;
+    margin: 0px;
+    margin-left: 10px;
+  }
+  
+  /* User Card */ 
+  .UserCard {
+    display: flex;
+    flex-direction: row;
+    background: white; 
+    border-radius: 5px;
+    width: auto;
+    height: auto;
+    padding: 15px 20px;
+  }
+  
+  .UserCard h4 {
+    font-size: 14px;
+    opacity: 0.5;
+    font-weight: 600;
+  }
+
+  .chart {
+    background: white; 
+    border-radius: 5px;
+  }
+
+  .recharts-surface {
+    padding: 20px 30px 20px 0px
+  }
+
+  .patientImg {
+    width: 40px; 
+    height: 40px; 
+    border-radius: 100px;
+    margin-right: 10px;
+  }
+    
+  .Page {
+    padding: 30px;
+    height: 100vh; 
+    overflow-y: auto;
+  }
+  
+  .VaccineHeader, 
+  .MedicationHeader, 
+  .LabResultHeader,
+  .LabTest {
+    padding: 25px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+.VaccineHeader p, 
+.MedicationHeader p, 
+.LabResultHeader p {
+  font-weight: 500;
+}
+
+.VaccineHeader:hover {
+  background: #009C8C15; 
+}
+
+.VaccineHeader h3 {
+  font-size: 22px;
+  color: #009C8C; 
+}
+
+.LabResultHeader h3 {
+  font-size: 18px; 
+  color: #009C8C; 
+}
+
+.VaccinationSkeleton, .MedicationSkeleton {
+  padding: 10px;
+}
+
+.VaccineHeader .plus-icon, 
+.LabResultHeader .plus-icon {
+  width: 30px;
+  height: 30px;
+  background-image: url("/src/plus.png"); 
+  margin-top: 3px;
+  margin-right: 10px;
+  background-position: center;
+  background-size: contain; 
+  background-repeat: no-repeat;
+}
+
+.VaccineHeader .minus-icon, 
+.LabResultHeader .minus-icon {
+  width: 30px;
+  height: 30px;
+  background-image: url("/src/minus.png"); 
+  margin-top: 3px;
+  margin-right: 10px;
+  background-position: center;
+  background-size: contain; 
+  background-repeat: no-repeat;
+}
+
+.LabResultHeader:hover, 
+.VaccineHeader:hover {
+  background:#c5e1f3;
+  cursor: pointer;
+}
+
+.flex-group {
+  display: flex; 
+  flex-direction: row; 
+}
+
+.ObservationPage {
+  display: flex;
+  flex-direction: row;
+  margin: -30px;
+  height: 100vh;
+}
+
+.Observations {
+  flex: 60%;
+  overflow-y: auto;
+}
+
+.ObservationList {
+  padding: 10px 10px 10px 10px;
+}
+
+.ObservationListFlex {
+  display: flex;
+  flex-wrap: wrap; 
+  gap: 10px;
+  padding: 10px 10px 10px 10px; 
+}
+
+#ObservationList tr:hover {
+  background:#c5e1f3;
+  cursor: pointer;
+}
+
+#ObservationDetails tr:hover {
+  background: white; 
+}
+
+.ObservationDetails {
+  flex: 40%;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 97px; 
+  align-self: flex-start;
+  background: white;
+  border-left: 1px solid lightgray; 
+  height: 100vh;
+  max-width: 500px;
+  overflow-y: auto; 
+}
+
+.ObservationDetails .title {
+  padding: 10px;
+  height: 56px;
+  background: #d5e9e6; 
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0px;
+  z-index: 99999;
+  align-self: flex-start;
+}
+
+.ObservationDetails .close {
+  color:rgb(82, 82, 82); 
+  cursor: pointer;
+}
+
+.ObservationDetails .vaccine-details {
+  height: auto; 
+}
+
+.ObservationHeader {
+  background-color: #d5e9e6;
+  position: sticky;
+  top: 0px;
+  align-self: flex-start;
+  padding: 10px 10px 10px 0px;
+  z-index: 99999;
+}
+
+.ObservationDetails h3 {
+  margin: 5px 0; 
+  color: rgb(82, 82, 82);
+}
+
+.ObservationCard
+.ObservationCardByType {
+  min-height: 0 !important;
+  display: flex; 
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.ObservationCardByType:hover {
+  background:#c5e1f3;
+  cursor: pointer;
+}
+
+.ObservationCardByType:target {
+  background:#c5e1f3;
+  cursor: pointer;
+}
+
+.ObservationCardByType {
+  flex: 1 1 250px; 
+  margin: 0 !important; 
+}
+
+.ObservationCardByType p {
+  font-weight: 400;
+  font-size: 16px; 
+  margin-top: 3px;
+}
+
+.ObservationCardByType h2 {
+  font-size: 32px;
+}
+
+.ObservationCardByType h3 {
+  font-size: 24px;
+  margin-bottom: 5px;
+}
+
+.LabTest {
+  flex: 50%; 
+  color: rgb(82, 82, 82);
+}
+
+.LabTest h3,
+.LabTest p {
+  color: rgb(82, 82, 82);
+}
+
+.LabTest h2 {
+  color: #49B1F7;
+}
+
+.toggleButton, 
+.toggleButtonActive {
+  align-items: center;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 0px 15px 8px 15px;
+  border: none;
+  border-radius: 3px;
+  margin-left: 10px;
+}
+
+.toggleButton {
+  background-color: white; 
+  color: rgb(82, 82, 82);
+}
+
+.toggleButtonActive {
+  background-color: #009C8C; 
+  color: white; 
+}
+
+.toggleButton:hover {
+  background-color: #009c8cb4;
+  color: white; 
+}
+
+.toggleButton:active, 
+.toggleButton:focus {
+  background-color: #009C8C;
+  color: white; 
+}
+
+.alignEnd {
+  justify-content: end;
+  display: flex; 
+  flex-direction: row;
+}
+
+.unconfirmed,
+.provisional, 
+.differential, 
+.confirmed, 
+.refuted, 
+.entered-in-error, 
+.active, 
+.on-hold,
+.ended, 
+.stopped, 
+.completed, 
+.cancelled, 
+.draft,
+.unknown {
+  border-radius: 100px; 
+  font-size: 14px; 
+  font-weight: 500; 
+  text-transform: capitalize;
+  padding: 5px 10px; 
+  width: auto; 
+}
+
+.unconfirmed,
+.provisional, 
+.differential,
+.on-hold,
+.completed {
+  color:#49B1F7;
+  background-color: #49b2f757;
+}
+
+.refuted, .unknown, .draft {
+  color:rgb(255, 255, 255);
+  background-color: rgb(82, 82, 82);
+}
+
+.entered-in-error, .stopped, .ended, .cancelled{
+  color: #FF4155;
+  background-color: #ff415452;
+}
+
+.confirmed, .active {
+  color: #009C8C;
+  background-color: #009c8c56;
+}
+
+/* Code in the follow section was obtained from https://github.com/WebDevSimplified/skeleton-loading */ 
+.skeleton {
+  opacity: 0.7;
+  animation: skeleton-loading 1s linear infinite alternate;
+}
+
+.skeleton-text {
+  width: 100%;
+  height: 0.75rem;
+  background: #009C8C;
+  margin-bottom: .3rem;
+  border-radius: .125rem;
+}
+
+.skeleton-text:last-child {
+  margin-bottom: 0;
+  width: 80%;
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-color: #009c8c5f;
+  }
+
+  100% {
+    background-color: hsl(200, 20%, 95%);
+  }
+}
+
+.skeleton-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.skeleton-row {
+  display: block;
+}
+
+.skeleton-card {
+  background-color: white;
+  padding: 16px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+.skeleton-header {
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+}
+
+.skeleton-title {
+  font-weight: bold;
+  font-size: 1.25rem;
+  text-transform: capitalize;
+  word-wrap: none;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  flex-grow: 1;
+}
+
+/* Code in the block above was obtained from https://github.com/WebDevSimplified/skeleton-loading*/ 
