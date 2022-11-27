@@ -18,22 +18,22 @@ export default class Launcher extends React.Component {
    * is loaded directly. An EHR can still launch it by passing `iss`
    * and `launch` url parameters
    */
-  // componentDidMount() {
-  //   SMART.authorize({
-  //     clientId: 'c4c03928-4356-478c-b8fb-23589a31841d',
-  //     scope: 'launch launch/patient patient/read offline_access patient/Patient.read patient/Observation.read patient/Observation.write patient/MedicationRequest.read ',
-  //     redirectUri: './app/dashboard',
-  //     iss: 'https://fhir-ehr-code.cerner.com/r4/',
-  //     // iss: 'https://r4.smarthealthit.org',
+  componentDidMount() {
+    SMART.authorize({
+      clientId: 'd64b37f5-d3b5-4c25-abe8-23ebe8f5a04e',
+      scope: 'launch launch/patient patient/read offline_access patient/Patient.read patient/Observation.read patient/Observation.write patient/MedicationRequest.read patient/Condition.read patient/Vaccination.read',
+      redirectUri: './portal',
+      iss: 'https://fhir-ehr-code.cerner.com/r4/',
+      // iss: 'https://r4.smarthealthit.org',
 
-  //     completeInTarget: false
-  //   });
+      completeInTarget: false
+    });
 
-  //   FHIR.oauth2.ready()
-  //   .then(client => client.request("Patient"))
-  //   .then(console.log('test'))
-  //   .catch(console.error);
-  // }
+    FHIR.oauth2.ready()
+    .then(client => client.request("Patient"))
+    .then(console.log('test'))
+    .catch(console.error);
+  }
   
 
 
@@ -42,7 +42,7 @@ export default class Launcher extends React.Component {
  */
 
 
-
+/*
 componentDidMount() {
   SMART.authorize({
     clientId: 'my-client-id',
@@ -61,6 +61,6 @@ componentDidMount() {
 
 render() {
   return 'Launching...';
-}
+}*/
 
 }
