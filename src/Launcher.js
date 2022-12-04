@@ -20,12 +20,10 @@ export default class Launcher extends React.Component {
    */
   componentDidMount() {
     SMART.authorize({
-      clientId: 'd64b37f5-d3b5-4c25-abe8-23ebe8f5a04e',
-      scope: 'launch launch/patient patient/read offline_access patient/Patient.read patient/Observation.read patient/Observation.write patient/MedicationRequest.read patient/Condition.read patient/Vaccination.read',
+    clientId: '2c3b2d78-dba6-4cae-accf-0aa8a6325317',
+    scope: 'launch launch/patient patient/read offline_access patient/Patient.read patient/Observation.read patient/Observation.write patient/MedicationRequest.read patient/Condition.read patient/Vaccination.read',
       redirectUri: './portal',
-      iss: 'https://fhir-ehr-code.cerner.com/r4/',
-      // iss: 'https://r4.smarthealthit.org',
-
+      iss: 'https://r4.smarthealthit.org',
       completeInTarget: false
     });
 
@@ -35,32 +33,28 @@ export default class Launcher extends React.Component {
     .catch(console.error);
   }
   
-
-
 /**
  * Could also return `null` for empty page
  */
 
+// componentDidMount() {
+//   SMART.authorize({
+//     clientId: 'my-client-id',
+//     scope: 'launch launch/patient patient/read offline_access',
+//     redirectUri: './portal',
+//     iss: 'https://launch.smarthealthit.org/v/r4/sim/eyJoIjoiMSIsImIiOiJkNjRiMzdmNS1kM2I1LTRjMjUtYWJlOC0yM2ViZThmNWEwNGUiLCJqIjoiMSJ9/fhir',
 
-/*
-componentDidMount() {
-  SMART.authorize({
-    clientId: 'my-client-id',
-    scope: 'launch launch/patient patient/read offline_access',
-    redirectUri: './app/dashboard',
-    iss: 'https://launch.smarthealthit.org/v/r4/sim/eyJoIjoiMSIsImIiOiJkNjRiMzdmNS1kM2I1LTRjMjUtYWJlOC0yM2ViZThmNWEwNGUiLCJqIjoiMSJ9/fhir',
+//     completeInTarget: false
+//   });
 
-    completeInTarget: false
-  });
-
-  FHIR.oauth2.ready()
-  .then(client => client.request("Patient"))
-  .then(console.log('test'))
-  .catch(console.error);
-}
+//   FHIR.oauth2.ready()
+//   .then(client => client.request("Patient"))
+//   .then(console.log('test'))
+//   .catch(console.error);
+// }
 
 render() {
   return 'Launching...';
-}*/
+}
 
 }

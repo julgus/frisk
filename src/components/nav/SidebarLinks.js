@@ -9,8 +9,8 @@ import RequestQuoteIcon from '@mui/icons-material/RequestQuote';
 import { object } from 'prop-types';
 import { ConstructionOutlined } from '@material-ui/icons';
 
-export function getPageName(link) {
-    var title = "Not found!";
+export function getPageName(link, name) {
+    var title = "Welcome back, " + name + "!";
     SidebarLinks.forEach(o => {
         if (o.link.includes(link)) {
             title = o.title; 
@@ -21,14 +21,9 @@ export function getPageName(link) {
 
 export const SidebarLinks = [
     {
-        title: "Messages",
+        title: "Dashboard",
         icon: <MailOutlineIcon />,
-        link: "/portal/messages"
-    }, 
-    {
-        title: "Appointments",
-        icon: <CalendarMonthIcon />,
-        link: "/portal/appointments"
+        link: "/portal/"
     }, 
     {
         title: "Medication",
@@ -46,13 +41,13 @@ export const SidebarLinks = [
         link: "/portal/labresults"
     }, 
     {
+        title: "Vital Signs",
+        icon: <MonitorHeartIcon />,
+        link: "/portal/vitalsigns"
+    }, 
+    {
         title: "Vaccination",
         icon: <VaccinesIcon />,
         link: "/portal/vaccination"
-    }, 
-    {
-        title: "Billing",
-        icon: <RequestQuoteIcon />,
-        link: "/portal/billing"
     }
 ]

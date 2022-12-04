@@ -1,22 +1,12 @@
 import { Navigate } from 'react-router-dom';
-import DashboardLayout from 'src/components/dashboard/DashboardLayout';
+import DashboardLayout from 'src/components/dashboard/BasicLayout';
 import MainLayout from 'src/components/MainLayout';
-import Dashboard from 'src/pages/Dashboard';
 import Launcher from 'src/Launcher';
-import Portal from './pages/Portal';
+import Portal from './components/portal/Portal';
 
 /* Code base from Course Lab 4 */ 
+
 const routes = [
-  {
-    path: 'app',
-    element: <DashboardLayout />,
-    children: [
-      { path: 'dashboard', element: <Dashboard /> },
-      { path: 'app/dashboard', element: <Dashboard /> },
-      { path: 'launch', element: <Launcher /> },
-      { path: '*', element: <Navigate to="/portal" /> }
-    ]
-  },
   {
     path: '/',
     element: <MainLayout />,

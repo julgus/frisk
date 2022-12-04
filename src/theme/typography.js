@@ -1,3 +1,5 @@
+/* Code adopted from Lab 4 */ 
+
 export default {
   h1: {
     fontWeight: 500,

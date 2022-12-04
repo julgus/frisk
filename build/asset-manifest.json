@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/frisk/static/css/main.8404e1e8.css",
+    "main.js": "/frisk/static/js/main.ddb8c2c3.js",
+    "static/media/user-1.jpg": "/frisk/static/media/user-1.805b9234559bff555137.jpg",
+    "static/media/minus.png": "/frisk/static/media/minus.eb2f7c8b421fd902c387.png",
+    "static/media/hospital.png": "/frisk/static/media/hospital.05fd93cb5da441227087.png",
+    "index.html": "/frisk/index.html",
+    "main.8404e1e8.css.map": "/frisk/static/css/main.8404e1e8.css.map",
+    "main.ddb8c2c3.js.map": "/frisk/static/js/main.ddb8c2c3.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.8404e1e8.css",
+    "static/js/main.ddb8c2c3.js"
+  ]
+}

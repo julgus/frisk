@@ -281,11 +281,12 @@ body {
     
   .Page {
     padding: 30px;
-    height: 100vh; 
+    height: 90vh; 
     overflow-y: auto;
   }
   
   .VaccineHeader, 
+  .ConditionHeader, 
   .MedicationHeader, 
   .LabResultHeader,
   .LabTest {
@@ -295,13 +296,16 @@ body {
   }
 
 .VaccineHeader p, 
+.ConditionHeader p, 
 .MedicationHeader p, 
 .LabResultHeader p {
   font-weight: 500;
 }
 
-.VaccineHeader:hover {
-  background: #009C8C15; 
+.MedicationHeader a {
+  display: flex;
+  align-items: center;
+  color: #49B1F7; 
 }
 
 .VaccineHeader h3 {
@@ -309,7 +313,8 @@ body {
   color: #009C8C; 
 }
 
-.LabResultHeader h3 {
+.LabResultHeader h3, 
+.ConditionHeader h3 {
   font-size: 18px; 
   color: #009C8C; 
 }
@@ -319,10 +324,11 @@ body {
 }
 
 .VaccineHeader .plus-icon, 
+.MedicationHeader .plus-icon, 
 .LabResultHeader .plus-icon {
   width: 30px;
   height: 30px;
-  background-image: url("/src/plus.png"); 
+  background-image: url("/src/img/plus.png"); 
   margin-top: 3px;
   margin-right: 10px;
   background-position: center;
@@ -331,10 +337,11 @@ body {
 }
 
 .VaccineHeader .minus-icon, 
+.MedicationHeader .minus-icon,
 .LabResultHeader .minus-icon {
   width: 30px;
   height: 30px;
-  background-image: url("/src/minus.png"); 
+  background-image: url("/src/img/minus.png"); 
   margin-top: 3px;
   margin-right: 10px;
   background-position: center;
@@ -342,15 +349,18 @@ body {
   background-repeat: no-repeat;
 }
 
-.LabResultHeader:hover, 
-.VaccineHeader:hover {
-  background:#c5e1f3;
-  cursor: pointer;
-}
-
 .flex-group {
   display: flex; 
   flex-direction: row; 
+}
+
+med-icon.active  {
+  color: #009C8C; 
+  font-size: 24px;
+}
+
+med-icon {
+  color: #FF4155; 
 }
 
 .ObservationPage {
@@ -443,7 +453,10 @@ body {
   cursor: pointer;
 }
 
-.ObservationCardByType:hover {
+.LabResultHeader:hover, 
+.VaccineHeader:hover,
+.ObservationCardByType:hover, 
+.MedicationCard:hover {
   background:#c5e1f3;
   cursor: pointer;
 }
@@ -532,7 +545,13 @@ body {
 .refuted, 
 .entered-in-error, 
 .active, 
+.recurrence, 
+.relapse,
+.inactive,
+.remission, 
+.unknown,
 .on-hold,
+.resolved, 
 .ended, 
 .stopped, 
 .completed, 
@@ -544,19 +563,22 @@ body {
   font-weight: 500; 
   text-transform: capitalize;
   padding: 5px 10px; 
-  width: auto; 
+  height: fit-content;
+  width: fit-content; 
 }
 
 .unconfirmed,
 .provisional, 
 .differential,
 .on-hold,
+.resolved,
+.remission, 
 .completed {
   color:#49B1F7;
   background-color: #49b2f757;
 }
 
-.refuted, .unknown, .draft {
+.refuted, .unknown, .draft, .inactive {
   color:rgb(255, 255, 255);
   background-color: rgb(82, 82, 82);
 }
@@ -566,7 +588,7 @@ body {
   background-color: #ff415452;
 }
 
-.confirmed, .active {
+.confirmed, .active, .relapse, .recurrence {
   color: #009C8C;
   background-color: #009c8c56;
 }
@@ -634,4 +656,13 @@ body {
   flex-grow: 1;
 }
 
+.selected-card {
+  animation: highlight-animation 3s;
+}
+
 /* Code in the block above was obtained from https://github.com/WebDevSimplified/skeleton-loading*/ 
+
+@keyframes highlight-animation {
+  0%   {background: #009c8c64; left:0px; top:0px;}
+  100% {background:rgb(247, 247, 247); left:0px; top:0px;}
+}

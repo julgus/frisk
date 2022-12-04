@@ -58,16 +58,19 @@ const Vaccines = (props) => (
   </>
 );
 
-const toggle = (e) => {
-  var id = e.target.id; 
-  var div = document.getElementById(id); 
 
-  if (document.getElementById(id).parentNode.lastElementChild.style.display == 'none') {
-    document.getElementById(id).parentNode.lastElementChild.style.display = "block";
+const toggle = (e) => {
+  var target = e.target; 
+  while (target.id == "") {
+    target = target.parentNode; 
+  }  
+  var div = document.getElementById(target.id); 
+  if (div.parentNode.lastElementChild.style.display == 'none') {
+    div.parentNode.lastElementChild.style.display = "block";
     var icon = div.getElementsByClassName("plus-icon")[0];
     icon.className = "minus-icon";
   } else {
-    document.getElementById(id).parentNode.lastElementChild.style.display = "none";
+    div.parentNode.lastElementChild.style.display = "none";
     var icon = div.getElementsByClassName("minus-icon")[0];
     icon.className = "plus-icon";
   }

@@ -1,7 +1,7 @@
 import React from 'react' 
 import '../../App.css'
 import { SidebarLinks } from './SidebarLinks'
-import logo from '../../hospital.png'; 
+import logo from '../../img/hospital.png'; 
 
 function Sidebar() {
     return (

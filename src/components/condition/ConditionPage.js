@@ -1,4 +1,4 @@
-import React, {useState} from 'react'; 
+import React, {useState, useEffect} from 'react'; 
 import { Helmet } from 'react-helmet';
 import moment from 'moment';
 
@@ -11,11 +11,22 @@ import RemoveCircleOutline from '@mui/icons-material/RemoveCircleOutline';
 import { ConstructionOutlined } from '@material-ui/icons';
 import PageSkeleton from '../loading/PageSkeleton';
 
+const capitalize = sentence => {
+  const words = sentence.toLowerCase().split(" ");
+
+  for (let i = 0; i < words.length; i++) {
+      words[i] = words[i][0].toUpperCase() + words[i].substr(1);
+  }
+  
+  return words.join(' ');    
+}
 
 const Conditions = (props) => (
   <>
-    {Array.from(props.conditions).map((condition, index) => (
-      <Box className='VaccinationCard' key={index} style={{marginTop: 0}}
+    {Array.from(props.conditions)
+       .sort((a, b) => moment(b.recordedDate) - moment(a.recordedDate))
+      .map((condition, index) => (
+      <Box className='ConditionCard' key={index}
           sx={{
             minHeight: '100%',
             background: '#FFFFFF',
@@ -25,14 +36,21 @@ const Conditions = (props) => (
           }}
       >
       <div>
-        <div id={"header" + index} className="VaccineHeader" onClick={toggle}>
+        <div id={`c${condition.code.coding[0].code}`} className="ConditionHeader">
           <div className='flex-group'>
             <div className="condition-name">
-              <p>Name and type</p>
-              <h3>{condition.code.text}</h3>
-              <div className={condition.verificationStatus.coding[0].code}>{condition.verificationStatus.coding[0].code}</div>
-              <p>Health clinic</p>
-              <h3>{condition.code.text}</h3>
+              <div className="">
+                <p>Name and type</p>
+                <div className="flex-group">
+                  <h2>{condition.code.text}</h2>
+                  <div style={{marginLeft: '10px'}} className={condition.verificationStatus.coding[0].code}>{condition.verificationStatus.coding[0].code}</div>
+                  <div style={{marginLeft: '10px'}} className={condition.clinicalStatus.coding[0].code}>{condition.clinicalStatus.coding[0].code}</div>
+                </div>
+                <p style={{marginTop: '10px'}}>Health clinic</p>
+                <h3>{capitalize(condition.encounter.serviceProvider.name)}</h3>
+                <p style={{marginTop: '10px'}}>Diagnosed by</p>
+                <h3>{condition.encounter.participant[0].individual.name[0].prefix[0] + " " + condition.encounter.participant[0].individual.name[0].given[0] + " " + condition.encounter.participant[0].individual.name[0].family}</h3>
+              </div>
             </div>
           </div>
           <div className='flex-group'>
@@ -40,8 +58,18 @@ const Conditions = (props) => (
               <AccessTimeIcon style={{width: '25px', height: '25px', marginRight: '10px'}}/>
             </div>
             <div className="date">
-              <p>Date</p>
-              <p>{moment(condition.recordedDate).format('LL')}</p>
+              <p>Diagnosed</p>
+              <h3>{moment(condition.recordedDate).format('LL')}</h3>
+              {(() => {
+                if (condition.clinicalStatus.coding[0].code == "resolved") {
+                  return (
+                    <div style={{marginTop: '10px'}} className="date">
+                      <p>Resolved</p>
+                      <h3>{moment(condition.abatementDateTime).format('LL')}</h3>
+                    </div>
+                  );
+                }})()
+              }
             </div>
           </div>
         </div>
@@ -50,21 +78,6 @@ const Conditions = (props) => (
     ))}
   </>
 );
-
-const toggle = (e) => {
-  var id = e.target.id; 
-  var div = document.getElementById(id); 
-
-  if (document.getElementById(id).parentNode.lastElementChild.style.display == 'none') {
-    document.getElementById(id).parentNode.lastElementChild.style.display = "block";
-    var icon = div.getElementsByClassName("plus-icon")[0];
-    icon.className = "minus-icon";
-  } else {
-    document.getElementById(id).parentNode.lastElementChild.style.display = "none";
-    var icon = div.getElementsByClassName("minus-icon")[0];
-    icon.className = "plus-icon";
-  }
-}
 
 export default class ConditionPage extends React.Component {
     static contextType = FhirClientContext;
@@ -100,10 +113,15 @@ export default class ConditionPage extends React.Component {
               conditions: conditions, 
               error: null 
             });
+            this.scrollToElement();
         })
         .catch(error => {
           this.setState({error, loading: false})
-        });
+        }); 
+      }
+
+      getRef() {
+        return window.location.hash.slice(1) != "" ? window.location.hash.slice(1) : ""; 
       }
 
       render() {
@@ -123,4 +141,14 @@ export default class ConditionPage extends React.Component {
           </div>
        );      
     }
+
+    scrollToElement = () => {
+      const element = document.getElementById(this.getRef());
+      if (element) {
+        element.scrollIntoView(); 
+        element.classList.add("selected-card");
+        window.history.pushState({}, document.title, "/" + "portal/conditions");
+      }
+    }
+
 }

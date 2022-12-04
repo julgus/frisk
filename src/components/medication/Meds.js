@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import moment from 'moment';
 import PerfectScrollbar from 'react-perfect-scrollbar';
-import VaccinesIcon from '@mui/icons-material/Vaccines';
+import MedicationIcon from '@mui/icons-material/Medication';
 
 import {
   Box,
@@ -19,9 +19,7 @@ import { capitalize } from 'lodash';
 const Meds = (medications) => {
   console.log(medications); 
   const [selectedCustomerIds] = useState([]);
-  const meds = Object.values(medications);
-  console.log("meds:"); 
-  console.log(meds);
+  const meds = Object.values(medications.medications);
 
   const capitalize = sentence => {
     const words = sentence.toLowerCase().split(" ");
@@ -38,10 +36,10 @@ const Meds = (medications) => {
       <PerfectScrollbar>
         <Box>
           <Table>
-            <TableHead style={{backgroundColor: "#009C8C30"}} sx={{m: 0, p: 0}}>
+            <TableHead style={{backgroundColor: "#009C8C30", fontsize: '24px'}} sx={{m: 0, p: 0}}>
               <TableRow>
                 <TableCell sx={{m: 0, py: 0}}>
-                  Status
+                  
                 </TableCell>
                 <TableCell sx={{m: 0, py: 0}}>
                   Issued By
@@ -52,17 +50,19 @@ const Meds = (medications) => {
                 <TableCell sx={{m: 0, py: 0}}>
                   Date
                 </TableCell>
+                <TableCell sx={{m: 0, py: 0}}>
+                  Status
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {meds.map((med) => (
                 <TableRow
-                  hover
                   key={med.id}
                   selected={selectedCustomerIds.indexOf(med.id) !== -1}
                 >
-                  <TableCell style={{width: '15px'}}>
-                    {med.status}
+                  <TableCell style={{color: (med.status == 'active') ? 'green' : 'red', width: '15px'}}>
+                    <MedicationIcon/>
                   </TableCell>
                   <TableCell>
                     <Box
@@ -96,6 +96,9 @@ const Meds = (medications) => {
                   </TableCell>
                   <TableCell>
                     {moment(med.authoredOn).format('DD/MM/YYYY')}
+                  </TableCell>
+                  <TableCell style={{width: '15px'}}>
+                    {capitalize(med.status)}
                   </TableCell>
                 </TableRow>
               ))}
