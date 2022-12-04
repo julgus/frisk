@@ -18,40 +18,40 @@ export default class Launcher extends React.Component {
    * is loaded directly. An EHR can still launch it by passing `iss`
    * and `launch` url parameters
    */
-  componentDidMount() {
-    SMART.authorize({
-    clientId: '2c3b2d78-dba6-4cae-accf-0aa8a6325317',
-    scope: 'launch launch/patient patient/read offline_access patient/Patient.read patient/Observation.read patient/Observation.write patient/MedicationRequest.read patient/Condition.read patient/Vaccination.read',
-      redirectUri: './portal',
-      iss: 'https://r4.smarthealthit.org',
-      completeInTarget: false
-    });
+  // componentDidMount() {
+  //   SMART.authorize({
+  //   clientId: '2c3b2d78-dba6-4cae-accf-0aa8a6325317',
+  //   scope: 'launch launch/patient patient/read offline_access patient/Patient.read patient/Observation.read patient/Observation.write patient/MedicationRequest.read patient/Condition.read patient/Vaccination.read',
+  //     redirectUri: './portal',
+  //     iss: 'https://r4.smarthealthit.org',
+  //     completeInTarget: false
+  //   });
 
-    FHIR.oauth2.ready()
-    .then(client => client.request("Patient"))
-    .then(console.log('test'))
-    .catch(console.error);
-  }
+  //   FHIR.oauth2.ready()
+  //   .then(client => client.request("Patient"))
+  //   .then(console.log('test'))
+  //   .catch(console.error);
+  // }
   
 /**
  * Could also return `null` for empty page
  */
 
-// componentDidMount() {
-//   SMART.authorize({
-//     clientId: 'my-client-id',
-//     scope: 'launch launch/patient patient/read offline_access',
-//     redirectUri: './portal',
-//     iss: 'https://launch.smarthealthit.org/v/r4/sim/eyJoIjoiMSIsImIiOiJkNjRiMzdmNS1kM2I1LTRjMjUtYWJlOC0yM2ViZThmNWEwNGUiLCJqIjoiMSJ9/fhir',
+componentDidMount() {
+  SMART.authorize({
+    clientId: 'my-client-id',
+    scope: 'launch launch/patient patient/read offline_access',
+    redirectUri: './portal',
+    iss: 'https://launch.smarthealthit.org/v/r4/sim/eyJoIjoiMSIsImIiOiJkNjRiMzdmNS1kM2I1LTRjMjUtYWJlOC0yM2ViZThmNWEwNGUiLCJqIjoiMSJ9/fhir',
 
-//     completeInTarget: false
-//   });
+    completeInTarget: false
+  });
 
-//   FHIR.oauth2.ready()
-//   .then(client => client.request("Patient"))
-//   .then(console.log('test'))
-//   .catch(console.error);
-// }
+  FHIR.oauth2.ready()
+  .then(client => client.request("Patient"))
+  .then(console.log('test'))
+  .catch(console.error);
+}
 
 render() {
   return 'Launching...';
