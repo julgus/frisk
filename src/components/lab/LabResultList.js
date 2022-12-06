@@ -38,13 +38,13 @@ const LabResultList = (props) => {
       <PerfectScrollbar>
         <Box>
           <Table>
-            <TableHead style={{backgroundColor: "#009C8C30"}} sx={{m: 0, p: 0}}>
+            <TableHead style={{backgroundColor: "#c5e1f3"}} sx={{m: 0, p: 0}}>
               <TableRow>
                 <TableCell sx={{m: 0, py: 0}}>
                   
                 </TableCell>
                 <TableCell sx={{m: 0, py: 0}}>
-                  Test
+                  Test name
                 </TableCell>
                 <TableCell sx={{m: 0, py: 0}}>
                   Value

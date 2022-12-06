@@ -41,11 +41,6 @@ export const SidebarLinks = [
         link: "/portal/labresults"
     }, 
     {
-        title: "Vital Signs",
-        icon: <MonitorHeartIcon />,
-        link: "/portal/vitalsigns"
-    }, 
-    {
         title: "Vaccination",
         icon: <VaccinesIcon />,
         link: "/portal/vaccination"

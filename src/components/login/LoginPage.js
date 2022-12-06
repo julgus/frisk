@@ -13,8 +13,7 @@ export default class LoginPage extends React.Component {
         login: props.login, 
         loading: true,
         error: props.error,
-        userName: 'Julia', 
-        email: "",
+        userName: '', 
         password: "",
         warning: ""
       };
@@ -22,8 +21,7 @@ export default class LoginPage extends React.Component {
 
     submitHandler = e => {
       e.preventDefault(); 
-
-      this.state.login({email: this.state.email, password: this.state.password}); 
+      this.state.login({username: this.state.userName, password: this.state.password}); 
     }
 
     render() {
@@ -39,7 +37,7 @@ export default class LoginPage extends React.Component {
                     <div className="LoginForm"> 
                           <div className="form-group email">
                               <label htmlFor="email">E-mail address or username</label>
-                              <input type="email" name="email" id="email" autoComplete="username" placeholder="E-mail address or username" onChange={e => this.state.email = e.target.value}/>
+                              <input type="text" name="email" id="email" autoComplete="username" placeholder="E-mail address or username" onChange={e => this.state.userName = e.target.value}/>
                           </div>
                           <div className="form-group password">
                               <label htmlFor="password">Password</label>

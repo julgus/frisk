@@ -10,14 +10,11 @@ import {
   TableBody,
   TableCell,
   TableHead,
-  TableSortLabel,
   TableRow,
   Typography,
 } from '@material-ui/core';
-import { capitalize } from 'lodash';
 
 const Meds = (medications) => {
-  console.log(medications); 
   const [selectedCustomerIds] = useState([]);
   const meds = Object.values(medications.medications);
 

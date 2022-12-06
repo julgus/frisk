@@ -16,7 +16,7 @@ import {
 } from '@material-ui/core';
 import { capitalize } from 'lodash';
 
-const LabAppointmentList = (labtests) => {
+const LabEncounterList = (labtests) => {
   const [selectedCustomerIds] = useState([]);
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
@@ -37,13 +37,13 @@ const LabAppointmentList = (labtests) => {
       <PerfectScrollbar>
         <Box>
           <Table>
-            <TableHead style={{backgroundColor: "#009C8C30"}} sx={{m: 0, p: 0}}>
+            <TableHead style={{backgroundColor: "#c5e1f3"}} sx={{m: 0, p: 0}}>
               <TableRow>
                 <TableCell sx={{m: 0, py: 0}}>
                   Date
                 </TableCell>
                 <TableCell sx={{m: 0, py: 0}}>
-                  Health clinic
+                  Ordered by
                 </TableCell>
                 <TableCell sx={{m: 0, py: 0}}>
                   Value
@@ -72,8 +72,6 @@ const LabAppointmentList = (labtests) => {
                         variant="body1"
                         className="clinic"
                       >
-                            {capitalize(test.encounter.serviceProvider.name)}
-                            {<br/>}
                             {test.encounter.participant[0].individual.name[0].prefix[0] + " " + test.encounter.participant[0].individual.name[0].given[0] + " " + test.encounter.participant[0].individual.name[0].family}
                       </Typography>
                     </Box>
@@ -108,4 +106,4 @@ const LabAppointmentList = (labtests) => {
 //   customers: PropTypes.array.isRequired
 // };
 
-export default LabAppointmentList;
+export default LabEncounterList;

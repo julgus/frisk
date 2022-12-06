@@ -2,8 +2,9 @@ import React from 'react'
 import '../../App.css'
 import { SidebarLinks } from './SidebarLinks'
 import logo from '../../img/hospital.png'; 
+import LogoutIcon from '@mui/icons-material/Logout';
 
-function Sidebar() {
+function Sidebar(props) {
     return (
         <div className='Sidebar'>
             <ul className='SidebarList'>
@@ -18,6 +19,9 @@ function Sidebar() {
                     </li>)
             })}
             </ul>
+            <div className="logout">
+                <button className="logout-btn" onClick={props.logout}><LogoutIcon sx={{marginRight: 1}} />Log out</button>
+            </div>
         </div>
     ); 
 }

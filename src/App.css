@@ -42,6 +42,9 @@ body {
   .Sidebar {
     position: fixed;
     font-size: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     height: 100%; 
     width: 250px;
     background-color: white; 
@@ -78,19 +81,53 @@ body {
   }
   
   .SidebarList .icon {
-    color: #009C8C; 
     flex:20%;
-    display: grid; 
-    place-items: center; 
     margin-left: 20px; 
     margin-right: 10px;
   }
-  
+
+  .Dashboard .icon, 
+  .SidebarList .icon {
+    color: #009C8C; 
+    display: grid; 
+    place-items: center; 
+  }
+
+  .DashboardHeader .icon {
+    height: 40px;
+    width: 40px;
+    translate: 0px -6px;
+    margin-right: 15px;
+  }
+
   .SidebarList .title {
     flex: 80%; 
     font-weight: 500;
   }
-  
+
+  .logout-btn {
+    background: white; 
+    color: black; 
+    border: none; 
+    font-size: 18px;
+    font-weight: 500;
+    color: rgb(99, 99, 99);
+    display: flex;
+    margin-left: -20px;
+    align-items: center;
+    font-family: 'Helvetica Neue';
+  }
+
+  .logout-btn:hover {
+    cursor: pointer;
+  }
+
+  .logout {
+    margin-bottom: 120px;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+  }
     /* Toolbar */ 
     .Toolbar {
       display: flex; 
@@ -281,10 +318,12 @@ body {
     
   .Page {
     padding: 30px;
-    height: 90vh; 
+    height: 85vh; 
     overflow-y: auto;
   }
   
+  .Encounter,
+  .DashboardHeader, 
   .VaccineHeader, 
   .ConditionHeader, 
   .MedicationHeader, 
@@ -292,9 +331,20 @@ body {
   .LabTest {
     padding: 25px;
     display: flex;
+  }
+
+  .DashboardHeader, 
+  .Encounter,
+  .VaccineHeader, 
+  .ConditionHeader, 
+  .MedicationHeader, 
+  .LabResultHeader,
+  .LabTest {
     justify-content: space-between;
   }
 
+.ObservationCardByType p,
+.DashboardHeader p, 
 .VaccineHeader p, 
 .ConditionHeader p, 
 .MedicationHeader p, 
@@ -302,33 +352,37 @@ body {
   font-weight: 500;
 }
 
+.DashboardHeader a, 
+.ConditionHeader a, 
 .MedicationHeader a {
   display: flex;
   align-items: center;
   color: #49B1F7; 
 }
 
-.VaccineHeader h3 {
-  font-size: 22px;
-  color: #009C8C; 
+.ConditionHeader .treatments {
+  margin-top: 15px;
 }
 
+.MedicationHeader h3,
+.ObservationCardByType h3,
+.VaccineHeader h3,
+.DashboardHeader h3, 
 .LabResultHeader h3, 
 .ConditionHeader h3 {
-  font-size: 18px; 
-  color: #009C8C; 
+  color: #034E46;
 }
 
 .VaccinationSkeleton, .MedicationSkeleton {
   padding: 10px;
 }
 
+.ConditionHeader .plus-icon, 
 .VaccineHeader .plus-icon, 
 .MedicationHeader .plus-icon, 
 .LabResultHeader .plus-icon {
   width: 30px;
   height: 30px;
-  background-image: url("/src/img/plus.png"); 
   margin-top: 3px;
   margin-right: 10px;
   background-position: center;
@@ -336,6 +390,14 @@ body {
   background-repeat: no-repeat;
 }
 
+.ConditionHeader .plus-icon, 
+.VaccineHeader .plus-icon, 
+.MedicationHeader .plus-icon, 
+.LabResultHeader .plus-icon {
+  background-image: url("/src/img/plus.png"); 
+}
+
+.ConditionHeader .minus-icon, 
 .VaccineHeader .minus-icon, 
 .MedicationHeader .minus-icon,
 .LabResultHeader .minus-icon {
@@ -389,6 +451,10 @@ med-icon {
 #ObservationList tr:hover {
   background:#c5e1f3;
   cursor: pointer;
+}
+
+#ObservationDetails thead > tr:hover {
+  background:#c5e1f3;
 }
 
 #ObservationDetails tr:hover {
@@ -477,12 +543,7 @@ med-icon {
   margin-top: 3px;
 }
 
-.ObservationCardByType h2 {
-  font-size: 32px;
-}
-
 .ObservationCardByType h3 {
-  font-size: 24px;
   margin-bottom: 5px;
 }
 
@@ -491,7 +552,6 @@ med-icon {
   color: rgb(82, 82, 82);
 }
 
-.LabTest h3,
 .LabTest p {
   color: rgb(82, 82, 82);
 }
@@ -666,3 +726,26 @@ med-icon {
   0%   {background: #009c8c64; left:0px; top:0px;}
   100% {background:rgb(247, 247, 247); left:0px; top:0px;}
 }
+
+.Dashboard {
+  display: flex;
+  flex-direction: row;
+  margin-top: 0;
+  height: 100%;
+}
+
+.Dashboard .DashboardHeader h2 {
+  margin-bottom: 10px;
+}
+
+.Dashboard h2 {
+  margin-bottom: 20px;
+}
+
+.Dashboard .activity {
+  flex: 60%;
+  padding-right: 30px;
+  margin-right: 10px;
+  padding-bottom: 20px;
+}
+

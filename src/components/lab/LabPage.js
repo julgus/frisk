@@ -9,12 +9,11 @@ import HighLightOff from '@mui/icons-material/HighlightOff'
 import ViewList from '@mui/icons-material/ViewList';
 import Dashboard from '@mui/icons-material/Dashboard';
 
-import LabAppointmentList from './LabAppointmentList';
 import LabResultList from './LabResultList';
 
-import { ConstructionOutlined, SignalCellularNullOutlined } from '@material-ui/icons';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import PageSkeleton from '../loading/PageSkeleton';
+import LabEncounterList from './LabEncounterList';
 
 const capitalize = sentence => {
   const words = sentence.toLowerCase().split(" ");
@@ -35,20 +34,21 @@ const ByEncounter = (props) => (
             background: '#FFFFFF',
             borderRadius: '5px', 
             p: 0,
-            my: 2, 
+            mb: 2 
           }}
       >
       <div>
-        <div id={"header" + index} className="LabResultHeader" onClick={toggle}>
+        <div id={`e${encounter.id}`} className="LabResultHeader" onClick={toggle}>
           <div className='flex-group'>
             <div className="plus-icon">
             </div>
             <div className="lab-test">
-              <p>Health center</p>
-              <h3>{capitalize(encounter.serviceProvider.name)}</h3>
-
+              <h2 style={{marginBottom: '10px'}}> Lab Encounter</h2>
               <p>Ordered by</p>
               <h3>{encounter.participant[0].individual.name[0].prefix[0] + " " + encounter.participant[0].individual.name[0].given[0] + " " + encounter.participant[0].individual.name[0].family}</h3>
+
+              <p>Health clinic</p>
+              <h3>{capitalize(encounter.serviceProvider.name)}</h3>
             </div>
           </div>
           <div className='flex-group'>
@@ -79,9 +79,10 @@ const ByType = (props) => (
           sx={{
             background: '#FFFFFF',
             borderRadius: '5px', 
-            p: 0,
-            my: 2, 
+            p: 0
           }}
+          
+          style={{marginBottom: 2}}
       >
       <div>
         <div id={testType.coding[0].code} className="LabTest" onClick={props.callback}>
@@ -110,7 +111,6 @@ const formatTestName = (testName) => {
   if (testName.includes('[')) {
     const split = testName.split('['); 
     return <><h3>{capitalize(split[0].trim())}</h3></>; 
-    //<p>[{split[1]}</p>
   } else {
     return <><h3>{capitalize(testName)}</h3></>;
   }
@@ -169,7 +169,7 @@ export default class LabPage extends React.Component {
           labTestTypes: null, 
           encounters: null, 
           detailedTest: null, 
-          displayMode: 'type'
+          displayMode: 'encounter'
         };
         this.updateDisplayState = this.updateDisplayState.bind(this)
       }
@@ -256,10 +256,15 @@ export default class LabPage extends React.Component {
               encounters: new Set(labresults.map(obs => obs.encounter)),
               error: null 
             });
+            this.scrollToElement();
         })
         .catch(error => {
           this.setState({error, loading: false})
         });
+      }
+
+      getRef() {
+        return window.location.hash.slice(1) != "" ? window.location.hash.slice(1) : ""; 
       }
 
       render() {
@@ -278,8 +283,8 @@ export default class LabPage extends React.Component {
             <div className="Observations">
               <div className="ObservationHeader">
                 <div id="toggleButtons" className="alignEnd">
-                  <button id="byType" className="toggleButtonActive" onClick={this.updateDisplayState}>By Type <Dashboard style={{width: "18px", translate: "0 7px"}}/> </button>
-                  <button id="ByEncounter" className="toggleButton" onClick={this.updateDisplayState}>By Encounter <ViewList style={{width: "20px", translate: "0 6px"}}/> </button>
+                  <button id="byType" className="toggleButton" onClick={this.updateDisplayState}>By Type <Dashboard style={{width: "18px", translate: "0 7px"}}/> </button>
+                  <button id="ByEncounter" className="toggleButtonActive" onClick={this.updateDisplayState}>By Encounter <ViewList style={{width: "20px", translate: "0 6px"}}/> </button>
                 </div>
               </div>
               {this.state.displayMode == 'encounter' ? 
@@ -294,7 +299,7 @@ export default class LabPage extends React.Component {
             <div id="ObservationDetails" className="ObservationDetails">
               <div className="title">
                 <div style={{'display': 'flex', 'flexDirection': 'row'}}>
-                  <h3>History: {this.formatTestName(this.getTestName(this.state.detailedTest))}</h3> 
+                  <h3>{this.formatTestName(this.getTestName(this.state.detailedTest))}</h3> 
                 </div>
                 <div className="close" onClick={() => this.setState({detailedTest: null})}>
                   <HighLightOff/>
@@ -310,11 +315,21 @@ export default class LabPage extends React.Component {
                     flexDirection: "column"
                   }}
                   sx={{m: 0, p: 0}}>
-                    <LabAppointmentList labtests={this.state.labtests.filter((test) => test.code.coding[0].code == this.state.detailedTest)} />
+                    <LabEncounterList labtests={this.state.labtests.filter((test) => test.code.coding[0].code == this.state.detailedTest)} />
                 </Box>
               </Container>
             </div> : ""}
           </div>
-       );      
+       );  
     }
+
+    scrollToElement = () => {
+      const element = document.getElementById(this.getRef());
+      if (element) {
+        element.scrollIntoView(); 
+        element.classList.add("selected-card");
+        window.history.pushState({}, document.title, "/" + "portal/labresults");
+      }
+    }
+    
 }

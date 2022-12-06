@@ -39,10 +39,13 @@ const VaccinationList = (vaccines) => {
       <PerfectScrollbar>
         <Box>
           <Table>
-            <TableHead style={{backgroundColor: "#009C8C30"}} sx={{m: 0, p: 0}}>
+            <TableHead style={{backgroundColor: "#c5e1f3"}} sx={{m: 0, p: 0}}>
               <TableRow>
                 <TableCell sx={{m: 0, py: 0}}>
                   
+                </TableCell>
+                <TableCell sx={{m: 0, py: 0}}>
+                  Date
                 </TableCell>
                 <TableCell sx={{m: 0, py: 0}}>
                   Performed by
@@ -50,20 +53,19 @@ const VaccinationList = (vaccines) => {
                 <TableCell sx={{m: 0, py: 0}}>
                   Provider
                 </TableCell>
-                <TableCell sx={{m: 0, py: 0}}>
-                  Date
-                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {vaccinations.map((med) => (
                 <TableRow
-                  hover
                   key={med.id}
                   selected={selectedCustomerIds.indexOf(med.id) !== -1}
                 >
                   <TableCell style={{width: '15px'}}>
                     <VaccinesIcon/>
+                  </TableCell>
+                  <TableCell>
+                    {moment(med.occurrenceDateTime).format('DD/MM/YYYY')}
                   </TableCell>
                   <TableCell>
                     <Box
@@ -94,9 +96,6 @@ const VaccinationList = (vaccines) => {
                         {capitalize(med.encounter.serviceProvider.name)}
                       </Typography>
                     </Box>
-                  </TableCell>
-                  <TableCell>
-                    {moment(med.occurrenceDateTime).format('DD/MM/YYYY')}
                   </TableCell>
                 </TableRow>
               ))}

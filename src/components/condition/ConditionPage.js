@@ -1,14 +1,11 @@
 import React, {useState, useEffect} from 'react'; 
-import { Helmet } from 'react-helmet';
 import moment from 'moment';
 
 import { FhirClientContext } from 'src/FhirClientContext';
-import { Box, Container, CircularProgress, autocompleteClasses, Skeleton } from '@material-ui/core';
+import { Box } from '@material-ui/core';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
-import AddCircleOutline from '@mui/icons-material/AddCircleOutline';
-import RemoveCircleOutline from '@mui/icons-material/RemoveCircleOutline';
+import { ArrowForward } from '@material-ui/icons';
 
-import { ConstructionOutlined } from '@material-ui/icons';
 import PageSkeleton from '../loading/PageSkeleton';
 
 const capitalize = sentence => {
@@ -24,7 +21,7 @@ const capitalize = sentence => {
 const Conditions = (props) => (
   <>
     {Array.from(props.conditions)
-       .sort((a, b) => moment(b.recordedDate) - moment(a.recordedDate))
+      .sort((a, b) => {return a.clinicalStatus.coding[0].code.localeCompare(b.clinicalStatus.coding[0].code)})
       .map((condition, index) => (
       <Box className='ConditionCard' key={index}
           sx={{
@@ -32,7 +29,7 @@ const Conditions = (props) => (
             background: '#FFFFFF',
             borderRadius: '5px', 
             p: 0,
-            my: 2, 
+            mb: 2, 
           }}
       >
       <div>
@@ -43,13 +40,25 @@ const Conditions = (props) => (
                 <p>Name and type</p>
                 <div className="flex-group">
                   <h2>{condition.code.text}</h2>
-                  <div style={{marginLeft: '10px'}} className={condition.verificationStatus.coding[0].code}>{condition.verificationStatus.coding[0].code}</div>
                   <div style={{marginLeft: '10px'}} className={condition.clinicalStatus.coding[0].code}>{condition.clinicalStatus.coding[0].code}</div>
                 </div>
-                <p style={{marginTop: '10px'}}>Health clinic</p>
-                <h3>{capitalize(condition.encounter.serviceProvider.name)}</h3>
-                <p style={{marginTop: '10px'}}>Diagnosed by</p>
+                <p style={{marginTop: '15px'}}>Diagnosed by</p>
                 <h3>{condition.encounter.participant[0].individual.name[0].prefix[0] + " " + condition.encounter.participant[0].individual.name[0].given[0] + " " + condition.encounter.participant[0].individual.name[0].family}</h3>
+                <p style={{marginTop: '15px'}}>Health clinic</p>
+                <h3>{capitalize(condition.encounter.serviceProvider.name)}</h3>
+                 {(() => {
+                      var meds = Array.from(props.medications)
+                        .filter(med => med.reasonReference[0].code.coding[0].code == condition.code.coding[0].code);
+                      if (meds.length > 0) {
+                        var arr = []; 
+                        arr.push(<p className="treatments">Active Treatments</p>); 
+                        meds.forEach(med => {
+                          console.log(med.medicationCodeableConcept.text);
+                          arr.push(<h3><a className='link' href={`/portal/medication#m${med.medicationCodeableConcept.coding[0].code}`}>{med.medicationCodeableConcept.text}<ArrowForward /></a></h3>); 
+                        });
+                        return arr; 
+                     }
+                })()}
               </div>
             </div>
           </div>
@@ -88,8 +97,7 @@ export default class ConditionPage extends React.Component {
           loading: true,
           error: null,
           conditions: null,
-          userName: 'Julia', 
-          email: ""
+          medications: null, 
         };
       }
 
@@ -109,11 +117,26 @@ export default class ConditionPage extends React.Component {
             const conditions = client.getPath(data, "");
             console.log(conditions);
             this.setState({
-              loading: false,
+              loading: true,
               conditions: conditions, 
               error: null 
             });
-            this.scrollToElement();
+            this._loader = client.request('/MedicationRequest?' + queryMed, {
+              resolveReferences: ["medicationReference", "encounter", "reasonReference.0", "encounter.participant.0.individual"],
+              pageLimit: 0, // get all pages
+              flat: true // return flat array of Observation resources
+            }).then(data => {            
+                const meds = client.getPath(data, "");
+                console.log(meds.filter(m => m.status == 'active')); 
+                this.setState({
+                  loading: false,
+                  medications: meds.filter(m => m.status == 'active'),
+                  error: null 
+                });
+                this.scrollToElement();
+            }).catch(error => {
+              this.setState({error, loading: false})
+            }); 
         })
         .catch(error => {
           this.setState({error, loading: false})
@@ -137,7 +160,7 @@ export default class ConditionPage extends React.Component {
         }
         return (
           <div className="ConditionPage">
-            <Conditions conditions={this.state.conditions} />
+            <Conditions conditions={this.state.conditions} medications={this.state.medications} />
           </div>
        );      
     }

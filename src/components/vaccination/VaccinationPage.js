@@ -1,16 +1,10 @@
-import React, {useState} from 'react'; 
-import { Helmet } from 'react-helmet';
+import React from 'react'; 
 import moment from 'moment';
 
 import { FhirClientContext } from 'src/FhirClientContext';
-import { Box, Container, CircularProgress, autocompleteClasses } from '@material-ui/core';
+import { Box, Container } from '@material-ui/core';
 import VaccinationList from './VaccinationList';
-import VaccinesIcon from '@mui/icons-material/Vaccines';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
-import AddCircleOutline from '@mui/icons-material/AddCircleOutline';
-import RemoveCircleOutline from '@mui/icons-material/RemoveCircleOutline';
-
-import { ConstructionOutlined } from '@material-ui/icons';
 import PageSkeleton from '../loading/PageSkeleton';
 
 
@@ -28,13 +22,13 @@ const Vaccines = (props) => (
           }}
       >
       <div>
-        <div id={"header" + index} className="VaccineHeader" onClick={toggle}>
+        <div  id={`v${type}`} className="VaccineHeader" onClick={toggle}>
           <div className='flex-group'>
             <div className="plus-icon">
             </div>
             <div className="vaccine-name">
               <p>Name and type</p>
-              <h3>{type}</h3>
+              <h2>{props.vaccines.filter((vac) => vac.vaccineCode.coding[0].code == type)[0].vaccineCode.text}</h2>
             </div>
           </div>
           <div className='flex-group'>
@@ -43,13 +37,13 @@ const Vaccines = (props) => (
             </div>
             <div className="last-dose">
               <p>Last dose</p>
-              <h3>{moment(props.vaccines.filter((vac) => vac.vaccineCode.text == type)[0].occurrenceDateTime).format('LL')}</h3>
+              <h3>{moment(props.vaccines.filter((vac) => vac.vaccineCode.coding[0].code == type)[0].occurrenceDateTime).format('LL')}</h3>
             </div>
           </div>
         </div>
         <Container className="vaccine-details" style={{display: 'none', margin: '0px', padding: '0px'}} maxWidth={false}>
             <Box sx={{m: 0, p: 0}}>
-              <VaccinationList vaccines={props.vaccines.filter((vac) => vac.vaccineCode.text == type)} />
+              <VaccinationList vaccines={props.vaccines.filter((vac) => vac.vaccineCode.coding[0].code == type)} />
             </Box>
         </Container>
       </div>
@@ -64,6 +58,7 @@ const toggle = (e) => {
   while (target.id == "") {
     target = target.parentNode; 
   }  
+  console.log(target);
   var div = document.getElementById(target.id); 
   if (div.parentNode.lastElementChild.style.display == 'none') {
     div.parentNode.lastElementChild.style.display = "block";
@@ -86,17 +81,15 @@ export default class VaccinationPage extends React.Component {
           error: null,
           vaccines: null,
           vaccineTypes: null, 
-          userName: 'Julia', 
-          email: ""
         };
       }
 
       componentDidMount() {
         const client = this.context.client;
         const queryMed = new URLSearchParams();
+        const getPath = client.getPath;
         queryMed.set('patient', client.patient.id);
         this.setState({loading: true});
-        const getPath = client.getPath;
   
         queryMed.set('_count', 100);
         queryMed.set('_sort', '-date');
@@ -110,16 +103,19 @@ export default class VaccinationPage extends React.Component {
             this.setState({
               loading: false,
               vaccines: vaccines,
-              vaccineTypes: new Set(vaccines.map(vac => vac.vaccineCode.text)), 
+              vaccineTypes: new Set(vaccines.map(vac => vac.vaccineCode.coding[0].code)), 
               error: null 
             });
+            this.scrollToElement();
         })
         .catch(error => {
           this.setState({error, loading: false})
         });
       }
 
-      //  <CircularProgress style={{height: '50px', width: '50px', marginTop: '20px'}}/>
+      getRef() {
+        return window.location.hash.slice(1) != "" ? window.location.hash.slice(1) : ""; 
+      }
 
       render() {
         const { error, loading, meds } = this.state;
@@ -138,4 +134,14 @@ export default class VaccinationPage extends React.Component {
           </div>
        );      
     }
+
+    scrollToElement = () => {
+      const element = document.getElementById(this.getRef());
+      if (element) {
+        element.scrollIntoView(); 
+        element.classList.add("selected-card");
+        window.history.pushState({}, document.title, "/" + "portal/vaccination");
+      }
+    }
+
 }

@@ -8,11 +8,11 @@ import Sidebar from '../nav/Sidebar';
 import Toolbar from '../nav/Toolbar';
 import { FhirClientContext } from 'src/FhirClientContext';
 import VaccinationPage from 'src/components/vaccination/VaccinationPage';
+import Dashboard from 'src/components/dashboard/Dashboard';
 import MedsPage from 'src/components/medication/MedsPage';
 import LabPage from 'src/components/lab/LabPage';
 import { getPageName } from 'src/components/nav/SidebarLinks';
 import ConditionPage from 'src/components/condition/ConditionPage';
-import VitalsPage from 'src/components/vitals/VitalsPage';
 
 export default class Portal extends React.Component {
     static contextType = FhirClientContext;
@@ -25,26 +25,22 @@ export default class Portal extends React.Component {
         error: null,
         patient: null,
         data: null, 
-        id: '950103-5704',
-        userName: 'Julia Gustafsson', 
-        email: "adssad",
-        loginError: "", 
-        warning: ""
+        id: '',
+        username: localStorage.getItem( 'username' ), 
+        loginError: '', 
+        warning: ''
       };
     }
 
     componentDidMount() {
         const client = this.context.client;
         this.setState({loading: true});
-        const getPath = client.getPath;
 
         var patient = 'Patient/' + this.context.client.patient.id; 
-        console.log(patient); 
   
         this._loader = client.request(patient)
           .then(data => {            
             const patient = client.getPath(data, "");
-            console.log(patient); 
             this.setState({
               loading: false,
               patient: patient,
@@ -58,21 +54,22 @@ export default class Portal extends React.Component {
 
     render() {
       const defaultPatient = {
-        email: "jgustafsson6@gatech.edu", 
-        password: "password" 
+        username: "patient", 
+        password: "patient" 
       }
   
       const Login = details => {
-        console.log("login");
-        if (details.email === defaultPatient.email && details.password === defaultPatient.password) {
-            this.setState({ userName: details.name, email: details.email });
+        if (details.username === defaultPatient.username && details.password === defaultPatient.password) {
+            this.setState({ username: details.username, email: details.email });
+            localStorage.setItem( 'username', details.username );
         } else {
             this.setState({ loginError: "Invalid credentials, please try again.", loading: false });
         }
       }
 
-      const Logout = details => {
-            this.setState({userName: "", email: ""}); 
+      const Logout = () => {
+        localStorage.clear();
+        this.setState({username: "", password: ""}); 
       }
 
       const {
@@ -89,17 +86,17 @@ export default class Portal extends React.Component {
           <CircularProgress />
         );
       }
-    
+
       return (
         <div className="App">
-          {(this.state.email !== "") ? (
+          {(this.state.username) ? (
             <div>
               <Toolbar name={this.state.patient.name[0].given[0] + " " + this.state.patient.name[0].family} id={this.state.patient.birthDate} gender={this.state.patient.gender} title={getPageName(this.state.page, this.state.patient.name[0].given[0])}/>
-              <Sidebar/>
+              <Sidebar logout={Logout}/>
               <div className="Content">
+                 <div className="Page">
                  {(this.state.page == "home") ? 
-                    (<h1>Dashboard</h1>) : ("")}
-                  <div className="Page">
+                    (<Dashboard/>) : ("")}
                   {(this.state.page == "vaccination") ? 
                       (<VaccinationPage/>) : ("") 
                   } 
